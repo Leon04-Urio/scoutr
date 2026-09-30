@@ -12,7 +12,7 @@ const reasons = [
 
 export function WhyChooseUs() {
   return (
-    <section className="relative pb-20 pt-36 md:pb-28 md:pt-44">
+    <section className="relative py-20 md:py-28 lg:pb-28 lg:pt-36">
       <Container className="grid gap-16 lg:grid-cols-[0.9fr_1.1fr] lg:items-start lg:gap-16">
         <div className="flex flex-col gap-10">
           <SectionHeading
@@ -31,8 +31,8 @@ export function WhyChooseUs() {
           </div>
         </div>
 
-        <div className="relative mx-auto aspect-[5/6] w-full max-w-sm lg:mx-0 lg:max-w-md">
-          <div className="absolute -top-32 right-0 aspect-[4/5] w-3/4 overflow-hidden">
+        <div className="relative mx-auto aspect-[5/6] w-full max-w-xs sm:max-w-sm lg:mx-0 lg:max-w-md">
+          <div className="absolute right-0 top-0 aspect-[4/5] w-3/4 overflow-hidden lg:-top-32">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=1200&q=80&auto=format&fit=crop"
@@ -40,7 +40,7 @@ export function WhyChooseUs() {
               className="h-full w-full object-cover"
             />
           </div>
-          <div className="absolute -left-14 top-6 aspect-[4/5] w-3/4 overflow-hidden border-4 border-ink shadow-xl sm:-left-20">
+          <div className="absolute bottom-0 left-0 aspect-[4/5] w-3/4 overflow-hidden border-4 border-ink shadow-xl lg:bottom-auto lg:-left-14 lg:top-6">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=1200&q=80&auto=format&fit=crop"
