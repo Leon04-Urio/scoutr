@@ -48,11 +48,10 @@ export function Hero() {
 
           <Reveal delay={0.08} className="max-w-xs sm:text-right">
             <p className="font-mono text-[11px] uppercase tracking-[0.15em] text-muted-2">
-              Property digitization &amp; marketing
+              360° tours for listings that sell
             </p>
-            <p className="mt-2 font-display text-[15px] italic leading-snug text-paper/75">
-              The digital experience that makes a property impossible to
-              scroll past.
+            <p className="mt-2 font-display text-2xl leading-snug text-paper md:text-3xl">
+              Let them walk it before they view it.
             </p>
           </Reveal>
         </div>

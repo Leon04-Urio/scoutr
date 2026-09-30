@@ -14,7 +14,7 @@ export function HeroPhoto() {
 
       {/* Wordmark sits behind the photo, so the building's own roofline
           (traced via clip-path below) hides parts of the letters. */}
-      <div className="pointer-events-none absolute inset-x-0 top-[32%] z-10 flex -translate-x-[22%] -translate-y-1/2 justify-center px-4">
+      <div className="pointer-events-none absolute inset-x-0 top-[32%] z-10 flex -translate-y-1/2 justify-center px-4 sm:-translate-x-[22%]">
         <h1
           className="select-none text-center font-geo font-medium uppercase leading-none tracking-tighter text-zinc-100"
           style={{

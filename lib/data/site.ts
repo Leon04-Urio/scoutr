@@ -4,9 +4,9 @@
  */
 export const site = {
   name: "Scoutr",
-  tagline: "Immersive digital experiences for properties.",
+  tagline: "360° tours for listings that sell.",
   description:
-    "Scoutr creates 360° virtual tours, interactive dollhouse views, measured floor plans, photography, and video for real estate, hotels, and developments.",
+    "Scoutr helps property sellers sell with 360° virtual tours, dollhouse views, measured floor plans, photography, and video.",
   email: "hello@scoutr.example",
   phone: "+254 700 000 000",
   whatsapp: "254700000000",

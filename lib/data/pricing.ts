@@ -35,7 +35,7 @@ export const pricingPackages: PricingPackage[] = [
       "Interactive dollhouse view",
       "Property video",
     ],
-    bestFor: "Luxury listings, hotels, developments",
+    bestFor: "High-end listings, hotels, developments",
     featured: false,
   },
 ];

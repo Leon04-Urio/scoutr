@@ -12,8 +12,8 @@ export function WhatWeDo() {
         <div className="w-full shrink-0 lg:w-[320px]">
           <SectionHeading
             eyebrow="What we do"
-            title="Every deliverable a property needs to sell itself."
-            description="Book one shoot. Walk away with the full set — tour, model, plan, photography, and video."
+            title="The 360° tour is the centerpiece."
+            description="Everything else — dollhouse, floor plan, photography, video — supports it."
           />
         </div>
 
@@ -22,11 +22,10 @@ export function WhatWeDo() {
             {track.map((service, i) => (
               <div
                 key={service.title + i}
-                className="flex h-56 w-56 shrink-0 flex-col gap-4 border border-line bg-surface p-7 md:h-64 md:w-64"
+                className="flex h-40 w-56 shrink-0 flex-col justify-between border border-line bg-surface p-7 md:h-44 md:w-64"
               >
                 <service.icon className="text-accent" size={22} strokeWidth={1.5} />
                 <h3 className="font-display text-lg text-paper">{service.title}</h3>
-                <p className="text-[13.5px] leading-relaxed text-muted">{service.description}</p>
               </div>
             ))}
           </div>

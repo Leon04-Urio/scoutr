@@ -8,7 +8,7 @@ export function FinalCta() {
       <Container className="flex flex-col items-center gap-8 text-center">
         <Reveal>
           <h2 className="max-w-2xl text-balance font-display text-3xl leading-[1.1] text-paper md:text-[3rem]">
-            Ready for people to experience your property, not just look at it?
+            Give your next listing a tour, not just a photo set.
           </h2>
         </Reveal>
         <Reveal delay={0.08}>
