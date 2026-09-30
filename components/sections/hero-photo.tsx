@@ -14,7 +14,7 @@ export function HeroPhoto() {
 
       {/* Wordmark sits behind the photo, so the building's own roofline
           (traced via clip-path below) hides parts of the letters. */}
-      <div className="pointer-events-none absolute inset-x-0 top-[22%] z-10 flex -translate-y-1/2 justify-center px-4 sm:top-[32%] sm:-translate-x-[22%]">
+      <div className="pointer-events-none absolute inset-x-0 top-[13%] z-10 flex -translate-x-[18%] -translate-y-1/2 justify-center px-4 lg:top-[32%] lg:-translate-x-[22%]">
         <h1
           className="select-none text-center font-geo font-medium uppercase leading-none tracking-tighter text-zinc-100"
           style={{
@@ -22,14 +22,14 @@ export function HeroPhoto() {
             textShadow: "0 6px 30px rgba(5,5,6,0.45), 0 2px 10px rgba(5,5,6,0.35)",
           }}
         >
-          Scoutr
+          Scoutr.
         </h1>
       </div>
 
       {/* Full-bleed photo — pre-cut to the building's own roofline (real
           alpha transparency above it), so the actual roof hides parts of
           the wordmark behind it instead of a flat rectangle. */}
-      <div className="absolute inset-x-0 bottom-0 z-20 h-[100vh] translate-y-[6px] md:h-[88vh]">
+      <div className="absolute inset-x-0 bottom-0 z-20 h-[100vh] translate-y-[6px] lg:h-[88vh]">
         <img
           src="/hero-roof-cutout.png"
           alt="Modern residential property digitized by Scoutr, exterior at dusk"

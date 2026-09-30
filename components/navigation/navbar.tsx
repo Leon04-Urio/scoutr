@@ -98,8 +98,8 @@ export function Navbar() {
         <Link
           href="/"
           className={cn(
-            "font-display text-lg md:hidden",
-            showWordmark ? "text-ink" : "text-paper"
+            "font-display text-lg transition-[opacity,color] duration-300 md:hidden",
+            showWordmark ? "text-ink opacity-100" : "text-paper opacity-0 pointer-events-none"
           )}
         >
           Scoutr<span className="text-accent-strong">.</span>
