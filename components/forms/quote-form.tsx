@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils";
 import { propertyTypes, servicesRequired } from "@/lib/data/site";
 
 const inputClasses =
-  "w-full rounded-lg border border-line-strong bg-surface px-4 py-3 text-[14px] text-paper placeholder:text-muted-2 outline-none focus:border-bronze";
+  "w-full rounded-lg border border-line-strong bg-surface px-4 py-3 text-[14px] text-paper placeholder:text-muted-2 outline-none focus:border-accent";
 const labelClasses = "text-[13px] font-medium text-muted";
 
 type Status = "idle" | "submitting" | "submitted";
@@ -32,7 +32,7 @@ export function QuoteForm() {
 
   if (status === "submitted") {
     return (
-      <div className="flex flex-col gap-3 rounded-2xl border border-bronze/40 bg-surface p-8">
+      <div className="flex flex-col gap-3 rounded-2xl border border-accent/40 bg-surface p-8">
         <h3 className="font-display text-xl text-paper">Thanks — that&rsquo;s in.</h3>
         <p className="text-[14px] leading-relaxed text-muted">
           This is a Phase 1 preview, so nothing was actually sent yet — form
@@ -111,7 +111,7 @@ export function QuoteForm() {
               onClick={() => toggleService(s)}
               className={cn(
                 "rounded-full border border-line-strong px-4 py-2 text-[13px] font-medium text-muted transition-colors hover:text-paper",
-                services.includes(s) && "border-bronze bg-bronze/10 text-bronze"
+                services.includes(s) && "border-accent bg-accent/10 text-accent"
               )}
             >
               {s}

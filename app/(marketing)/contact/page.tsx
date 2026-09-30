@@ -16,16 +16,16 @@ export default function ContactPage() {
       <Container className="grid gap-16 lg:grid-cols-[1fr_1.3fr] lg:gap-12">
         <div className="flex flex-col gap-8">
           <div className="flex flex-col gap-4">
-            <span className="font-mono text-[11px] font-medium uppercase tracking-[0.2em] text-bronze">
+            <span className="font-mono text-[11px] font-medium uppercase tracking-[0.2em] text-muted-2">
               Contact
             </span>
             <h1 className="max-w-md text-balance font-display text-4xl leading-[1.08] text-paper md:text-5xl">
               Let&rsquo;s talk about your property.
             </h1>
-            <p className="max-w-sm text-[15px] leading-relaxed text-muted">
-              Fill out the form, or reach us directly — WhatsApp is usually
-              the fastest way to get a reply.
+            <p className="max-w-sm font-display text-xl italic leading-snug text-muted">
+              WhatsApp is usually the fastest way to get a reply.
             </p>
+            <div className="h-px w-10 bg-line-strong" />
           </div>
 
           <div className="flex flex-col gap-5 rounded-2xl border border-line bg-surface p-7">
@@ -58,7 +58,7 @@ function ContactRow({
 }) {
   const content = (
     <div className="flex items-start gap-3">
-      <Icon size={17} className="mt-0.5 shrink-0 text-bronze" />
+      <Icon size={17} className="mt-0.5 shrink-0 text-accent" />
       <div className="flex flex-col">
         <span className="font-mono text-[10.5px] uppercase tracking-[0.12em] text-muted-2">
           {label}

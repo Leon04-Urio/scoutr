@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Menu, X } from "lucide-react";
 import { Container } from "@/components/ui/container";
 import { Button } from "@/components/ui/button";
@@ -12,6 +12,7 @@ import { cn } from "@/lib/utils";
 export function Navbar() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
+  const [showWordmark, setShowWordmark] = useState(false);
 
   // Close the mobile menu on route change — adjusted during render (React's
   // recommended pattern for "reset state when a prop changes") rather than
@@ -22,14 +23,42 @@ export function Navbar() {
     setOpen(false);
   }
 
+  // The wordmark only appears once the hero (home page only) is scrolled
+  // past. Pages with no #hero (about, portfolio, ...) show it immediately.
+  useEffect(() => {
+    const heroEl = document.getElementById("hero");
+    if (!heroEl) {
+      setShowWordmark(true);
+      return;
+    }
+    setShowWordmark(false);
+    const observer = new IntersectionObserver(
+      ([entry]) => setShowWordmark(!entry.isIntersecting),
+      { rootMargin: "-80px 0px 0px 0px" }
+    );
+    observer.observe(heroEl);
+    return () => observer.disconnect();
+  }, [pathname]);
+
   return (
-    <header className="sticky top-0 z-50 border-b border-line bg-ink/85 backdrop-blur-md">
-      <Container className="flex items-center justify-between py-5">
-        <Link href="/" className="font-display text-xl text-paper">
-          Scoutr<span className="text-bronze">.</span>
+    <header
+      className={cn(
+        "sticky top-0 z-50 transition-colors duration-300",
+        showWordmark ? "bg-paper" : "bg-transparent"
+      )}
+    >
+      <Container className="grid grid-cols-2 items-center py-4 md:grid-cols-[1fr_auto_1fr]">
+        <Link
+          href="/"
+          className={cn(
+            "hidden font-display text-lg transition-[opacity,color] duration-300 md:block",
+            showWordmark ? "text-ink opacity-100" : "text-paper opacity-0 pointer-events-none"
+          )}
+        >
+          Scoutr<span className="text-accent-strong">.</span>
         </Link>
 
-        <nav className="hidden items-center gap-9 md:flex">
+        <nav className="hidden items-center justify-self-center gap-6 md:flex">
           {mainNav.map((item) => {
             const active =
               item.href === "/" ? pathname === "/" : pathname.startsWith(item.href);
@@ -38,8 +67,14 @@ export function Navbar() {
                 key={item.href}
                 href={item.href}
                 className={cn(
-                  "text-[14px] font-medium text-muted transition-colors hover:text-paper",
-                  active && "text-paper"
+                  "font-mono text-[13px] font-semibold uppercase tracking-[0.1em] transition-colors",
+                  showWordmark
+                    ? active
+                      ? "text-ink"
+                      : "text-ink/70 hover:text-ink"
+                    : active
+                      ? "text-paper"
+                      : "text-paper/70 hover:text-paper"
                 )}
               >
                 {item.label}
@@ -48,18 +83,37 @@ export function Navbar() {
           })}
         </nav>
 
-        <div className="hidden md:block">
-          <Button href="/contact" size="sm">
-            Get a Quote
-          </Button>
-        </div>
+        <Link
+          href="/contact"
+          className={cn(
+            "hidden items-center justify-self-end rounded-sm px-5 py-2.5 text-[13px] font-semibold transition-colors md:inline-flex",
+            showWordmark
+              ? "bg-ink text-paper hover:bg-ink/85"
+              : "border border-paper/50 text-paper hover:bg-paper/10"
+          )}
+        >
+          Get a Quote
+        </Link>
+
+        <Link
+          href="/"
+          className={cn(
+            "font-display text-lg md:hidden",
+            showWordmark ? "text-ink" : "text-paper"
+          )}
+        >
+          Scoutr<span className="text-accent-strong">.</span>
+        </Link>
 
         <button
           type="button"
           aria-label={open ? "Close menu" : "Open menu"}
           aria-expanded={open}
           onClick={() => setOpen((v) => !v)}
-          className="flex h-10 w-10 items-center justify-center text-paper md:hidden"
+          className={cn(
+            "flex h-10 w-10 items-center justify-center justify-self-end md:hidden",
+            showWordmark ? "text-ink" : "text-paper"
+          )}
         >
           {open ? <X size={22} /> : <Menu size={22} />}
         </button>
@@ -72,7 +126,7 @@ export function Navbar() {
               <Link
                 key={item.href}
                 href={item.href}
-                className="rounded-lg px-2 py-3 text-[15px] font-medium text-paper/90 hover:bg-surface"
+                className="rounded-lg px-2 py-3 text-[15px] font-medium text-paper/90 hover:bg-paper/5"
               >
                 {item.label}
               </Link>

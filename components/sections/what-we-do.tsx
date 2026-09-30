@@ -1,32 +1,40 @@
 import { Container } from "@/components/ui/container";
 import { SectionHeading } from "@/components/ui/section-heading";
-import { Reveal } from "@/components/motion/reveal";
+import { SectionDivider } from "@/components/ui/section-divider";
 import { services } from "@/lib/data/services";
 
 export function WhatWeDo() {
-  return (
-    <section className="border-b border-line py-20 md:py-28">
-      <Container className="flex flex-col gap-12">
-        <SectionHeading
-          eyebrow="What we do"
-          title="Every deliverable a property needs to sell itself."
-          description="Book one shoot. Walk away with the full set — tour, model, plan, photography, and video."
-        />
+  const track = [...services, ...services];
 
-        <div className="grid gap-px overflow-hidden rounded-2xl border border-line bg-line sm:grid-cols-2 lg:grid-cols-3">
-          {services.map((service, i) => (
-            <Reveal key={service.title} delay={i * 0.04}>
-              <div className="flex h-full flex-col gap-4 bg-ink p-7">
-                <service.icon className="text-bronze" size={22} strokeWidth={1.5} />
+  return (
+    <section className="relative overflow-hidden py-20 md:py-28">
+      <Container className="flex flex-col gap-10 lg:flex-row lg:items-center">
+        <div className="w-full shrink-0 lg:w-[320px]">
+          <SectionHeading
+            eyebrow="What we do"
+            title="Every deliverable a property needs to sell itself."
+            description="Book one shoot. Walk away with the full set — tour, model, plan, photography, and video."
+          />
+        </div>
+
+        <div className="relative min-w-0 flex-1 overflow-hidden">
+          <div className="flex w-max animate-[marquee_40s_linear_infinite] gap-5">
+            {track.map((service, i) => (
+              <div
+                key={service.title + i}
+                className="flex h-56 w-56 shrink-0 flex-col gap-4 border border-line bg-surface p-7 md:h-64 md:w-64"
+              >
+                <service.icon className="text-accent" size={22} strokeWidth={1.5} />
                 <h3 className="font-display text-lg text-paper">{service.title}</h3>
-                <p className="text-[14px] leading-relaxed text-muted">
-                  {service.description}
-                </p>
+                <p className="text-[13.5px] leading-relaxed text-muted">{service.description}</p>
               </div>
-            </Reveal>
-          ))}
+            ))}
+          </div>
+          <div className="pointer-events-none absolute inset-y-0 left-0 w-16 bg-gradient-to-r from-ink to-transparent md:w-24" />
+          <div className="pointer-events-none absolute inset-y-0 right-0 w-16 bg-gradient-to-l from-ink to-transparent md:w-24" />
         </div>
       </Container>
+      <SectionDivider />
     </section>
   );
 }

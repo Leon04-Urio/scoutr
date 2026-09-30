@@ -2,8 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { ProjectCard } from "@/components/portfolio/project-card";
-import { projects } from "@/lib/data/projects";
-import type { PropertyType } from "@/types/project";
+import type { Project, PropertyType } from "@/types/project";
 import { cn } from "@/lib/utils";
 
 const filters: ("All" | PropertyType)[] = [
@@ -14,12 +13,12 @@ const filters: ("All" | PropertyType)[] = [
   "Development",
 ];
 
-export function PortfolioGrid() {
+export function PortfolioGrid({ projects }: { projects: Project[] }) {
   const [active, setActive] = useState<(typeof filters)[number]>("All");
 
   const visible = useMemo(
     () => (active === "All" ? projects : projects.filter((p) => p.propertyType === active)),
-    [active]
+    [active, projects]
   );
 
   return (
@@ -32,7 +31,7 @@ export function PortfolioGrid() {
             onClick={() => setActive(f)}
             className={cn(
               "rounded-full border border-line-strong px-4 py-2 text-[13px] font-medium text-muted transition-colors hover:text-paper",
-              active === f && "border-bronze bg-bronze/10 text-bronze"
+              active === f && "border-accent bg-accent/10 text-accent"
             )}
           >
             {f}

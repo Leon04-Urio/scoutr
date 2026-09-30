@@ -1,7 +1,5 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { Navbar } from "@/components/navigation/navbar";
-import { Footer } from "@/components/navigation/footer";
 import { site } from "@/lib/data/site";
 
 export const metadata: Metadata = {
@@ -33,14 +31,10 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
             legacy Pages Router and doesn't apply here. */}
         <link
           rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;600;700&family=Manrope:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500;1,600&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Alex+Brush&family=Montserrat:wght@500;600;700&display=swap"
         />
       </head>
-      <body className="flex min-h-screen flex-col bg-ink text-paper">
-        <Navbar />
-        <main className="flex-1">{children}</main>
-        <Footer />
-      </body>
+      <body className="flex min-h-screen flex-col bg-ink text-paper">{children}</body>
     </html>
   );
 }

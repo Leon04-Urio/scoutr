@@ -1,49 +1,64 @@
 import { Container } from "@/components/ui/container";
-import { Button } from "@/components/ui/button";
+import { SectionDivider } from "@/components/ui/section-divider";
 import { Reveal } from "@/components/motion/reveal";
+import { HeroPhoto } from "@/components/sections/hero-photo";
+
+const hotspots = [
+  { top: "46%", left: "36%" },
+  { top: "58%", left: "64%" },
+];
 
 export function Hero() {
   return (
-    <section className="relative overflow-hidden border-b border-line pt-20 pb-16 md:pt-28 md:pb-24">
-      {/* Ambient studio-light glow instead of a stock photo — cheap, on-brand,
-          and doesn't compete with the interactive demo just below it. */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute -top-40 right-[-10%] h-[560px] w-[560px] rounded-full bg-bronze/10 blur-[140px]"
-      />
+    <section id="hero" className="relative isolate -mt-20 flex min-h-screen items-end overflow-hidden">
+      <HeroPhoto />
 
-      <Container className="relative flex flex-col gap-8">
-        <Reveal>
-          <span className="font-mono text-[11px] font-medium uppercase tracking-[0.2em] text-bronze">
-            Property digitization &amp; marketing
-          </span>
-        </Reveal>
+      {hotspots.map((spot, i) => (
+        <span
+          key={i}
+          aria-hidden
+          className="pointer-events-none absolute z-20 -translate-x-1/2 -translate-y-1/2"
+          style={spot}
+        >
+          <span className="absolute inset-0 -m-2 animate-ping rounded-full border border-paper/40" />
+          <span className="block h-2.5 w-2.5 rounded-full bg-paper ring-4 ring-paper/20" />
+        </span>
+      ))}
 
-        <Reveal delay={0.05}>
-          <h1 className="max-w-3xl text-balance font-display text-[2.6rem] leading-[1.05] text-paper md:text-[4.2rem]">
-            Bring properties to life.
-          </h1>
-        </Reveal>
-
-        <Reveal delay={0.1}>
-          <p className="max-w-xl text-[16px] leading-relaxed text-muted md:text-[18px]">
-            We turn a walkthrough into an immersive 360° tour, an interactive
-            dollhouse view, and a measured floor plan — the kind of digital
-            experience that makes a property impossible to scroll past.
-          </p>
-        </Reveal>
-
-        <Reveal delay={0.15}>
-          <div className="flex flex-wrap gap-4 pt-2">
-            <Button href="/contact" size="lg">
-              Get a Quote
-            </Button>
-            <Button href="/portfolio" variant="outline" size="lg">
-              View Our Work
-            </Button>
+      <Container className="relative z-20 flex w-full flex-col gap-8 pb-12 md:pb-16">
+        <div className="flex flex-col gap-8 sm:flex-row sm:items-end sm:justify-between">
+          <div className="flex flex-col gap-5">
+            <Reveal>
+              <div className="w-64 rounded-2xl border border-line-strong bg-paper/10 p-5 backdrop-blur-md">
+                <span className="font-mono text-[10px] uppercase tracking-[0.15em] text-muted-2">
+                  Featured scan
+                </span>
+                <p className="mt-1 font-display text-lg text-paper">Maua Residence</p>
+                <dl className="mt-3 grid grid-cols-2 gap-y-1.5 text-[12px] text-paper/75">
+                  <dt className="text-muted-2">Location</dt>
+                  <dd>Nairobi, KE</dd>
+                  <dt className="text-muted-2">Year</dt>
+                  <dd>2026</dd>
+                  <dt className="text-muted-2">Size</dt>
+                  <dd>310 m²</dd>
+                </dl>
+              </div>
+            </Reveal>
           </div>
-        </Reveal>
+
+          <Reveal delay={0.08} className="max-w-xs sm:text-right">
+            <p className="font-mono text-[11px] uppercase tracking-[0.15em] text-muted-2">
+              Property digitization &amp; marketing
+            </p>
+            <p className="mt-2 font-display text-[15px] italic leading-snug text-paper/75">
+              The digital experience that makes a property impossible to
+              scroll past.
+            </p>
+          </Reveal>
+        </div>
       </Container>
+
+      <SectionDivider />
     </section>
   );
 }

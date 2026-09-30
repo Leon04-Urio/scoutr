@@ -1,5 +1,6 @@
 import { Container } from "@/components/ui/container";
 import { SectionHeading } from "@/components/ui/section-heading";
+import { SectionDivider } from "@/components/ui/section-divider";
 import { Reveal } from "@/components/motion/reveal";
 
 const reasons = [
@@ -27,7 +28,7 @@ const reasons = [
 
 export function WhyChooseUs() {
   return (
-    <section className="border-b border-line py-20 md:py-28">
+    <section className="relative py-20 md:py-28">
       <Container className="grid gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16">
         <SectionHeading
           eyebrow="Why Scoutr"
@@ -48,6 +49,7 @@ export function WhyChooseUs() {
           ))}
         </div>
       </Container>
+      <SectionDivider />
     </section>
   );
 }

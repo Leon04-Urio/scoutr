@@ -22,9 +22,11 @@ export const mainNav = [
   { label: "Home", href: "/" },
   { label: "About", href: "/about" },
   { label: "Portfolio", href: "/portfolio" },
-  { label: "Pricing", href: "/pricing" },
-  { label: "Contact", href: "/contact" },
 ];
+
+// Fuller link list for the footer — Pricing/Contact were dropped from the
+// header nav but stay reachable here.
+export const footerNav = [...mainNav, { label: "Pricing", href: "/pricing" }, { label: "Contact", href: "/contact" }];
 
 export const propertyTypes = [
   "Residential",

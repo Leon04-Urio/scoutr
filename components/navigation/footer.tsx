@@ -2,7 +2,7 @@ import Link from "next/link";
 import { Phone, Mail } from "lucide-react";
 import { InstagramIcon, LinkedinIcon, YoutubeIcon } from "@/components/icons/social";
 import { Container } from "@/components/ui/container";
-import { mainNav, site } from "@/lib/data/site";
+import { footerNav, site } from "@/lib/data/site";
 
 export function Footer() {
   return (
@@ -10,7 +10,7 @@ export function Footer() {
       <Container className="grid gap-12 py-16 md:grid-cols-[1.4fr_1fr_1fr]">
         <div className="flex flex-col gap-4">
           <Link href="/" className="font-display text-xl text-paper">
-            Scoutr<span className="text-bronze">.</span>
+            Scoutr<span className="text-accent">.</span>
           </Link>
           <p className="max-w-sm text-[14px] leading-relaxed text-muted">
             {site.description}
@@ -32,11 +32,11 @@ export function Footer() {
           <h4 className="font-mono text-[11px] uppercase tracking-[0.15em] text-muted-2">
             Navigate
           </h4>
-          {mainNav.map((item) => (
+          {footerNav.map((item) => (
             <Link
               key={item.href}
               href={item.href}
-              className="text-[14px] text-paper/85 hover:text-bronze"
+              className="text-[14px] text-paper/85 hover:text-paper"
             >
               {item.label}
             </Link>
@@ -49,13 +49,13 @@ export function Footer() {
           </h4>
           <a
             href={`mailto:${site.email}`}
-            className="flex items-center gap-2 text-[14px] text-paper/85 hover:text-bronze"
+            className="flex items-center gap-2 text-[14px] text-paper/85 hover:text-paper"
           >
             <Mail size={15} /> {site.email}
           </a>
           <a
             href={`tel:${site.phone.replace(/\s+/g, "")}`}
-            className="flex items-center gap-2 text-[14px] text-paper/85 hover:text-bronze"
+            className="flex items-center gap-2 text-[14px] text-paper/85 hover:text-paper"
           >
             <Phone size={15} /> {site.phone}
           </a>

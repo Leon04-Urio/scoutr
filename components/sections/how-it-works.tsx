@@ -1,5 +1,7 @@
 import { Container } from "@/components/ui/container";
 import { SectionHeading } from "@/components/ui/section-heading";
+import { SectionDivider } from "@/components/ui/section-divider";
+import { NumberedItem } from "@/components/ui/numbered-item";
 import { Reveal } from "@/components/motion/reveal";
 
 const steps = [
@@ -31,7 +33,7 @@ const steps = [
 
 export function HowItWorks() {
   return (
-    <section className="border-b border-line py-20 md:py-28">
+    <section className="relative py-20 md:py-28">
       <Container className="flex flex-col gap-14">
         <SectionHeading
           eyebrow="How it works"
@@ -43,15 +45,12 @@ export function HowItWorks() {
         <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
           {steps.map((step, i) => (
             <Reveal key={step.num} delay={i * 0.06}>
-              <div className="flex flex-col gap-3 border-t border-line-strong pt-5">
-                <span className="font-mono text-[12px] text-bronze">{step.num}</span>
-                <h3 className="font-display text-lg text-paper">{step.title}</h3>
-                <p className="text-[14px] leading-relaxed text-muted">{step.description}</p>
-              </div>
+              <NumberedItem index={i + 1} title={step.title} description={step.description} />
             </Reveal>
           ))}
         </div>
       </Container>
+      <SectionDivider />
     </section>
   );
 }

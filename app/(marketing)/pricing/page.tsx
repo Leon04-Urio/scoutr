@@ -15,17 +15,20 @@ export default function PricingPage() {
   return (
     <>
       <section className="border-b border-line py-16 md:py-24">
-        <Container className="flex flex-col gap-4">
-          <span className="font-mono text-[11px] font-medium uppercase tracking-[0.2em] text-bronze">
+        <Container className="flex flex-col gap-3">
+          <span className="font-mono text-[11px] font-medium uppercase tracking-[0.2em] text-muted-2">
             Pricing
           </span>
           <h1 className="max-w-2xl text-balance font-display text-4xl leading-[1.08] text-paper md:text-5xl">
             Packages that scale with the property.
           </h1>
+          <p className="max-w-xl font-display text-xl italic leading-snug text-muted">
+            Get an exact number with a quote.
+          </p>
+          <div className="mt-2 h-px w-10 bg-line-strong" />
           <p className="max-w-xl text-[15px] leading-relaxed text-muted">
             Prices depend on property size and location — the packages below
-            show what&rsquo;s included at each tier. Get an exact number with
-            a quote.
+            show what&rsquo;s included at each tier.
           </p>
         </Container>
       </section>
@@ -37,12 +40,12 @@ export default function PricingPage() {
               key={pkg.name}
               className={cn(
                 "flex h-full flex-col gap-6 rounded-2xl border p-8",
-                pkg.featured ? "border-bronze/50 bg-surface" : "border-line bg-surface/40"
+                pkg.featured ? "border-accent/50 bg-surface" : "border-line bg-surface/40"
               )}
             >
               <div className="flex flex-col gap-2">
                 {pkg.featured ? (
-                  <span className="w-fit rounded-full bg-bronze px-3 py-1 font-mono text-[10px] uppercase tracking-[0.1em] text-ink">
+                  <span className="w-fit rounded-full bg-accent px-3 py-1 font-mono text-[10px] uppercase tracking-[0.1em] text-ink">
                     Most booked
                   </span>
                 ) : null}
@@ -53,7 +56,7 @@ export default function PricingPage() {
               <ul className="flex flex-1 flex-col gap-3">
                 {pkg.includes.map((item) => (
                   <li key={item} className="flex items-start gap-2 text-[14px] text-paper/85">
-                    <Check size={16} className="mt-0.5 shrink-0 text-bronze" />
+                    <Check size={16} className="mt-0.5 shrink-0 text-accent" />
                     {item}
                   </li>
                 ))}

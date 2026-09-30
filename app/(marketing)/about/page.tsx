@@ -44,7 +44,7 @@ export default function AboutPage() {
       <section className="border-b border-line py-20 md:py-28">
         <Container className="flex flex-col gap-6">
           <Reveal>
-            <span className="font-mono text-[11px] font-medium uppercase tracking-[0.2em] text-bronze">
+            <span className="font-mono text-[11px] font-medium uppercase tracking-[0.2em] text-muted-2">
               About Scoutr
             </span>
           </Reveal>
@@ -53,14 +53,21 @@ export default function AboutPage() {
               We started Scoutr because photos stopped being enough.
             </h1>
           </Reveal>
+          <Reveal delay={0.07}>
+            <p className="max-w-2xl font-display text-xl italic leading-snug text-muted">
+              A listing photo asks a buyer to imagine a space.
+            </p>
+          </Reveal>
+          <Reveal delay={0.09}>
+            <div className="h-px w-10 bg-line-strong" />
+          </Reveal>
           <Reveal delay={0.1}>
-            <p className="max-w-2xl text-[16px] leading-relaxed text-muted md:text-[17px]">
-              A listing photo asks a buyer to imagine a space. It leaves out
-              the thing that actually sells a property — what it feels like
-              to walk through it. Scoutr exists to close that gap: we
-              digitize a property once and turn it into a 360° tour, a
-              dollhouse model, a measured floor plan, and photography and
-              video that all come from the same visit.
+            <p className="max-w-2xl text-[15px] leading-relaxed text-muted">
+              It leaves out the thing that actually sells a property — what
+              it feels like to walk through it. Scoutr exists to close that
+              gap: we digitize a property once and turn it into a 360°
+              tour, a dollhouse model, a measured floor plan, and
+              photography and video that all come from the same visit.
             </p>
           </Reveal>
         </Container>
@@ -70,7 +77,7 @@ export default function AboutPage() {
         <Container className="grid gap-16 lg:grid-cols-2">
           <Reveal>
             <div className="flex flex-col gap-4">
-              <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-bronze">
+              <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-muted-2">
                 Our mission
               </span>
               <h2 className="font-display text-2xl leading-snug text-paper md:text-3xl">
@@ -86,7 +93,7 @@ export default function AboutPage() {
           </Reveal>
           <Reveal delay={0.08}>
             <div className="flex flex-col gap-4">
-              <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-bronze">
+              <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-muted-2">
                 Why it matters
               </span>
               <h2 className="font-display text-2xl leading-snug text-paper md:text-3xl">
@@ -113,7 +120,7 @@ export default function AboutPage() {
             {standards.map((s, i) => (
               <Reveal key={s.title} delay={i * 0.05}>
                 <div className="flex h-full flex-col gap-4 bg-ink p-7">
-                  <s.icon className="text-bronze" size={22} strokeWidth={1.5} />
+                  <s.icon className="text-accent" size={22} strokeWidth={1.5} />
                   <h3 className="font-display text-lg text-paper">{s.title}</h3>
                   <p className="text-[14px] leading-relaxed text-muted">{s.description}</p>
                 </div>
