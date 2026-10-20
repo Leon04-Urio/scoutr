@@ -2,8 +2,9 @@
 
 import { useActionState, useState } from "react";
 import { saveProject, type ProjectFormState } from "@/app/admin/(protected)/projects/actions";
-import type { Project, PropertyType } from "@/types/project";
+import type { Project, ProjectImage, PropertyType } from "@/types/project";
 import type { Testimonial } from "@/types/testimonial";
+import { MediaListField } from "@/components/admin/media-list-field";
 
 const propertyTypes: PropertyType[] = ["Residential", "Commercial", "Hospitality", "Development"];
 
@@ -23,9 +24,11 @@ function slugify(value: string) {
 export function ProjectForm({
   project,
   testimonial,
+  images = [],
 }: {
   project?: Project;
   testimonial?: Testimonial | null;
+  images?: ProjectImage[];
 }) {
   const [state, formAction, pending] = useActionState<ProjectFormState, FormData>(
     saveProject,
@@ -123,7 +126,7 @@ export function ProjectForm({
       </Field>
 
       <Field
-        label="Walkthrough video URL (optional — plays on card hover instead of the cover image)"
+        label="Walkthrough video URL (optional — plays on card hover and on the project page)"
         htmlFor="walkthroughVideoUrl"
       >
         <input
@@ -135,6 +138,32 @@ export function ProjectForm({
           className={inputClasses}
         />
       </Field>
+
+      <Field
+        label="3D tour link (optional — Matterport, Kuula, etc. Shown as an interactive embed, including its dollhouse and floor plan views)"
+        htmlFor="tourEmbedUrl"
+      >
+        <input
+          id="tourEmbedUrl"
+          name="tourEmbedUrl"
+          type="url"
+          defaultValue={project?.tourEmbedUrl}
+          placeholder="https://my.matterport.com/show/?m=…"
+          className={inputClasses}
+        />
+      </Field>
+
+      <MediaListField
+        id="galleryImages"
+        name="galleryImages"
+        label="Gallery photos — upload, or paste one image URL per line (optionally followed by | alt text)"
+        rows={5}
+        defaultValue={images.map((img) => (img.alt ? `${img.url} | ${img.alt}` : img.url)).join("\n")}
+        placeholder={"https://…/living-room.jpg | Living room\nhttps://…/kitchen.jpg"}
+        folder="gallery"
+        toLine={(url) => url}
+        className={`${inputClasses} font-mono text-[12px]`}
+      />
 
       <div className="flex flex-wrap gap-5">
         <label className={checkboxRowClasses}>
@@ -156,7 +185,7 @@ export function ProjectForm({
 
       <fieldset className="flex flex-col gap-4 rounded-xl border border-line p-5">
         <legend className="px-1 text-[13px] font-medium text-muted">
-          Client testimonial (optional)
+          Owner testimonial (optional — shown below the gallery and on the homepage)
         </legend>
         <Field label="Quote" htmlFor="testimonialQuote">
           <textarea
@@ -181,6 +210,7 @@ export function ProjectForm({
               id="testimonialRole"
               name="testimonialRole"
               defaultValue={testimonial?.role}
+              placeholder="e.g. Owner"
               className={inputClasses}
             />
           </Field>

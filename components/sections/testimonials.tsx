@@ -1,12 +1,13 @@
-import { Quote } from "lucide-react";
+import Link from "next/link";
+import { ArrowUpRight, Quote } from "lucide-react";
 import { Container } from "@/components/ui/container";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { SectionDivider } from "@/components/ui/section-divider";
 import { Reveal } from "@/components/motion/reveal";
-import { getGeneralTestimonials } from "@/lib/supabase/queries";
+import { getProjectTestimonials } from "@/lib/supabase/queries";
 
 export async function Testimonials() {
-  const testimonials = await getGeneralTestimonials();
+  const testimonials = await getProjectTestimonials();
   if (testimonials.length === 0) return null;
 
   return (
@@ -22,8 +23,20 @@ export async function Testimonials() {
                 <blockquote className="flex-1 text-[14.5px] leading-relaxed text-paper/85">
                   {t.quote}
                 </blockquote>
-                <figcaption className="font-mono text-[11px] uppercase tracking-[0.1em] text-muted-2">
-                  {t.name} — {t.role}
+                <figcaption className="flex flex-col gap-2">
+                  <span className="font-mono text-[11px] uppercase tracking-[0.1em] text-muted-2">
+                    {t.name}
+                    {t.role ? ` — ${t.role}` : ""}
+                  </span>
+                  {t.project ? (
+                    <Link
+                      href={`/portfolio/${t.project.slug}`}
+                      className="flex w-fit items-center gap-1 text-[13px] text-paper/90 transition-colors hover:text-accent"
+                    >
+                      {t.project.title}
+                      <ArrowUpRight size={14} />
+                    </Link>
+                  ) : null}
                 </figcaption>
               </figure>
             </Reveal>

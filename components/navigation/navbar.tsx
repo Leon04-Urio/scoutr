@@ -55,7 +55,7 @@ export function Navbar() {
             showWordmark ? "text-ink opacity-100" : "text-paper opacity-0 pointer-events-none"
           )}
         >
-          Scoutr<span className="text-accent-strong">.</span>
+          Scoutr.
         </Link>
 
         <nav className="hidden items-center justify-self-center gap-6 md:flex">
@@ -86,7 +86,7 @@ export function Navbar() {
         <Link
           href="/contact"
           className={cn(
-            "hidden items-center justify-self-end rounded-sm px-5 py-2.5 text-[13px] font-semibold transition-colors md:inline-flex",
+            "hidden items-center justify-self-end rounded-sm px-5 py-2.5 text-[13px] font-semibold uppercase tracking-[0.08em] transition-colors md:inline-flex",
             showWordmark
               ? "bg-ink text-paper hover:bg-ink/85"
               : "border border-paper/50 text-paper hover:bg-paper/10"
@@ -102,7 +102,7 @@ export function Navbar() {
             showWordmark ? "text-ink opacity-100" : "text-paper opacity-0 pointer-events-none"
           )}
         >
-          Scoutr<span className="text-accent-strong">.</span>
+          Scoutr.
         </Link>
 
         <button
@@ -132,7 +132,7 @@ export function Navbar() {
               </Link>
             ))}
           </nav>
-          <Button href="/contact" className="mt-4 w-full">
+          <Button href="/contact" className="mt-4 w-full uppercase tracking-[0.08em]">
             Get a Quote
           </Button>
         </div>

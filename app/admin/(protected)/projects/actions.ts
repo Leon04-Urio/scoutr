@@ -18,12 +18,42 @@ function readProjectFields(formData: FormData) {
     description: String(formData.get("description") ?? "").trim(),
     cover_image_url: String(formData.get("coverImageUrl") ?? "").trim() || null,
     walkthrough_video_url: String(formData.get("walkthroughVideoUrl") ?? "").trim() || null,
+    tour_embed_url: String(formData.get("tourEmbedUrl") ?? "").trim() || null,
     featured: formData.get("featured") === "on",
     published: formData.get("published") === "on",
     has_360: formData.get("has360") === "on",
     has_dollhouse: formData.get("hasDollhouse") === "on",
     has_floor_plan: formData.get("hasFloorPlan") === "on",
   };
+}
+
+function isHttpUrl(value: string) {
+  try {
+    const { protocol } = new URL(value);
+    return protocol === "http:" || protocol === "https:";
+  } catch {
+    return false;
+  }
+}
+
+/**
+ * Parses a "one per line" textarea where each line is `first | second` or
+ * just `first`. Blank lines are skipped.
+ */
+function readPipeLines(formData: FormData, name: string) {
+  return String(formData.get(name) ?? "")
+    .split(/\r?\n/)
+    .map((line) => line.trim())
+    .filter(Boolean)
+    .map((line) => {
+      const [first, ...rest] = line.split("|");
+      return [first.trim(), rest.join("|").trim()] as const;
+    });
+}
+
+// Gallery lines are `url | alt text`.
+function readGallery(formData: FormData) {
+  return readPipeLines(formData, "galleryImages").map(([url, alt]) => ({ url, alt: alt || null }));
 }
 
 export async function saveProject(
@@ -37,6 +67,16 @@ export async function saveProject(
 
   if (!fields.slug || !fields.title || !fields.location || !fields.summary) {
     return { error: "Title, slug, location, and summary are required." };
+  }
+
+  const gallery = readGallery(formData);
+
+  if (fields.tour_embed_url && !isHttpUrl(fields.tour_embed_url)) {
+    return { error: "The 3D tour link must be a full https:// URL." };
+  }
+  const badGallery = gallery.find((g) => !isHttpUrl(g.url));
+  if (badGallery) {
+    return { error: `Gallery line isn't a valid URL: ${badGallery.url}` };
   }
 
   const supabase = await createClient();
@@ -67,6 +107,21 @@ export async function saveProject(
     });
   }
 
+  // Same replace-wholesale approach for gallery photos: the textarea order
+  // becomes sort_order.
+  const { error: imagesDeleteError } = await supabase
+    .from("project_images")
+    .delete()
+    .eq("project_id", projectId);
+  if (imagesDeleteError) return { error: imagesDeleteError.message };
+  if (gallery.length > 0) {
+    const { error } = await supabase.from("project_images").insert(
+      gallery.map((g, i) => ({ project_id: projectId, url: g.url, alt: g.alt, sort_order: i }))
+    );
+    if (error) return { error: error.message };
+  }
+
+  revalidatePath("/"); // homepage shows featured projects and project testimonials
   revalidatePath("/portfolio");
   revalidatePath(`/portfolio/${fields.slug}`);
   revalidatePath("/admin/projects");

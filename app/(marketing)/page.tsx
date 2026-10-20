@@ -3,6 +3,7 @@ import { StatsStrip } from "@/components/sections/stats-strip";
 import { InteractiveDemo } from "@/components/sections/interactive-demo";
 import { WhatWeDo } from "@/components/sections/what-we-do";
 import { FeaturedProjects } from "@/components/sections/featured-projects";
+import { Testimonials } from "@/components/sections/testimonials";
 import { WhyChooseUs } from "@/components/sections/why-choose-us";
 import { ClientLogos } from "@/components/sections/client-logos";
 import { FinalCta } from "@/components/sections/final-cta";
@@ -16,6 +17,7 @@ export default function Home() {
       <InteractiveDemo />
       <FeaturedProjects />
       <WhyChooseUs />
+      <Testimonials />
       <ClientLogos />
       <FinalCta />
     </>

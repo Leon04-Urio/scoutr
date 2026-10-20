@@ -17,6 +17,7 @@ export function toProject(row: ProjectRow): Project {
       label: row.cover_label ?? undefined,
     },
     walkthroughVideoUrl: row.walkthrough_video_url ?? undefined,
+    tourEmbedUrl: row.tour_embed_url ?? undefined,
     featured: row.featured,
     has360: row.has_360,
     hasDollhouse: row.has_dollhouse,

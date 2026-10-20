@@ -27,8 +27,16 @@ export interface Project {
   };
   /** Short 360°/walkthrough clip that autoplays on card hover, in place of the cover image. */
   walkthroughVideoUrl?: string;
+  /** External 3D tour (Matterport, Kuula, etc.), embedded on the project page. */
+  tourEmbedUrl?: string;
   featured: boolean;
   has360: boolean;
   hasDollhouse: boolean;
   hasFloorPlan: boolean;
+}
+
+/** A gallery photo on the project page, from `project_images`. */
+export interface ProjectImage {
+  url: string;
+  alt?: string;
 }

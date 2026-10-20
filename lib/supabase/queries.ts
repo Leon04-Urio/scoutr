@@ -1,6 +1,6 @@
 import { createClient } from "@/lib/supabase/server";
 import { toProject } from "@/lib/supabase/mappers";
-import type { Project } from "@/types/project";
+import type { Project, ProjectImage } from "@/types/project";
 import type { Testimonial } from "@/types/testimonial";
 
 export async function getPublishedProjects(): Promise<Project[]> {
@@ -52,16 +52,47 @@ export async function getProjectByIdForAdmin(id: string): Promise<Project | null
   return data ? toProject(data) : null;
 }
 
-export async function getGeneralTestimonials(): Promise<Testimonial[]> {
+export async function getProjectImages(projectId: string): Promise<ProjectImage[]> {
   const supabase = await createClient();
   const { data, error } = await supabase
-    .from("testimonials")
-    .select("quote, name, role")
-    .is("project_id", null)
-    .order("created_at", { ascending: true });
+    .from("project_images")
+    .select("url, alt")
+    .eq("project_id", projectId)
+    .order("sort_order", { ascending: true });
 
   if (error) throw error;
-  return data.map((row) => ({ quote: row.quote, name: row.name, role: row.role ?? "" }));
+  return data.map((row) => ({ url: row.url, alt: row.alt ?? undefined }));
+}
+
+/** Every published property's testimonial, newest first, tagged with its property. */
+export async function getProjectTestimonials(): Promise<Testimonial[]> {
+  const supabase = await createClient();
+  const [{ data, error }, projects] = await Promise.all([
+    supabase
+      .from("testimonials")
+      .select("project_id, quote, name, role")
+      .not("project_id", "is", null)
+      .order("created_at", { ascending: false }),
+    getPublishedProjects(),
+  ]);
+
+  if (error) throw error;
+  const byId = new Map(projects.map((p) => [p.id, p]));
+
+  // Filtering against published projects (rather than relying on RLS alone)
+  // keeps unpublished properties off the homepage for a signed-in admin too.
+  return data.flatMap((row) => {
+    const project = row.project_id ? byId.get(row.project_id) : undefined;
+    if (!project) return [];
+    return [
+      {
+        quote: row.quote,
+        name: row.name,
+        role: row.role ?? "",
+        project: { title: project.title, slug: project.slug },
+      },
+    ];
+  });
 }
 
 export async function getProjectTestimonial(projectId: string): Promise<Testimonial | null> {

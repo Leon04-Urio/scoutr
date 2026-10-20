@@ -22,7 +22,7 @@ export function HeroPhoto() {
             textShadow: "0 6px 30px rgba(5,5,6,0.45), 0 2px 10px rgba(5,5,6,0.35)",
           }}
         >
-          Scoutr.
+          Scoutr
         </h1>
       </div>
 

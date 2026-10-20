@@ -2,6 +2,7 @@
 
 import { useState, type FormEvent } from "react";
 import { Button } from "@/components/ui/button";
+import { DatePicker } from "@/components/ui/date-picker";
 import { cn } from "@/lib/utils";
 import { propertyTypes, servicesRequired } from "@/lib/data/site";
 
@@ -11,7 +12,8 @@ const labelClasses = "text-[13px] font-medium text-muted";
 
 type Status = "idle" | "submitting" | "submitted";
 
-export function QuoteForm() {
+/** `wide` lays the fields out four across on large screens, for full-width placements. */
+export function QuoteForm({ wide = false }: { wide?: boolean }) {
   const [status, setStatus] = useState<Status>("idle");
   const [services, setServices] = useState<string[]>([]);
 
@@ -46,7 +48,7 @@ export function QuoteForm() {
 
   return (
     <form onSubmit={handleSubmit} className="flex flex-col gap-6">
-      <div className="grid gap-6 sm:grid-cols-2">
+      <div className={cn("grid gap-6 sm:grid-cols-2", wide && "lg:grid-cols-4")}>
         <Field label="Name" htmlFor="name">
           <input id="name" name="name" required className={inputClasses} placeholder="Jane Wanjiru" />
         </Field>
@@ -97,7 +99,7 @@ export function QuoteForm() {
           />
         </Field>
         <Field label="Preferred date" htmlFor="preferredDate">
-          <input id="preferredDate" name="preferredDate" type="date" className={inputClasses} />
+          <DatePicker id="preferredDate" name="preferredDate" className={inputClasses} />
         </Field>
       </div>
 
@@ -130,7 +132,12 @@ export function QuoteForm() {
         />
       </Field>
 
-      <Button type="submit" size="lg" disabled={status === "submitting"} className="w-fit">
+      <Button
+        type="submit"
+        size="lg"
+        disabled={status === "submitting"}
+        className={cn("w-fit uppercase tracking-[0.08em]", wide && "self-center")}
+      >
         {status === "submitting" ? "Sending…" : "Send Request"}
       </Button>
     </form>

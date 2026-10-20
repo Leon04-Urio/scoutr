@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 
 export default function ContactPage() {
   return (
-    <section className="py-16 md:py-24">
+    <section className="pb-16 pt-10 md:pb-24 md:pt-14">
       <Container className="grid gap-16 lg:grid-cols-[1fr_1.3fr] lg:gap-12">
         <div className="flex flex-col gap-8">
           <div className="flex flex-col gap-4">

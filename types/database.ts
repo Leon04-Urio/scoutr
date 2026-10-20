@@ -1,5 +1,5 @@
 /**
- * Hand-written to match supabase/migrations/0001_init.sql. No Supabase CLI
+ * Hand-written to match supabase/migrations/ (0001 through 0004). No Supabase CLI
  * project is linked yet to codegen this from `supabase gen types` — once
  * one is, this file can be regenerated and this comment removed.
  *
@@ -32,6 +32,7 @@ export interface Database {
           cover_gradient: string | null;
           cover_label: string | null;
           walkthrough_video_url: string | null;
+          tour_embed_url: string | null;
           featured: boolean;
           published: boolean;
           has_360: boolean;
@@ -51,6 +52,7 @@ export interface Database {
           cover_gradient?: string | null;
           cover_label?: string | null;
           walkthrough_video_url?: string | null;
+          tour_embed_url?: string | null;
           featured?: boolean;
           published?: boolean;
           has_360?: boolean;
@@ -68,6 +70,7 @@ export interface Database {
           cover_gradient?: string | null;
           cover_label?: string | null;
           walkthrough_video_url?: string | null;
+          tour_embed_url?: string | null;
           featured?: boolean;
           published?: boolean;
           has_360?: boolean;
@@ -122,44 +125,6 @@ export interface Database {
         };
         Relationships: [];
       };
-      leads: {
-        Row: {
-          id: string;
-          name: string;
-          email: string;
-          phone: string | null;
-          company: string | null;
-          property_type: string | null;
-          property_location: string | null;
-          message: string | null;
-          source: string | null;
-          status: string;
-          created_at: string;
-        };
-        Insert: {
-          name: string;
-          email: string;
-          phone?: string | null;
-          company?: string | null;
-          property_type?: string | null;
-          property_location?: string | null;
-          message?: string | null;
-          source?: string | null;
-          status?: string;
-        };
-        Update: {
-          name?: string;
-          email?: string;
-          phone?: string | null;
-          company?: string | null;
-          property_type?: string | null;
-          property_location?: string | null;
-          message?: string | null;
-          source?: string | null;
-          status?: string;
-        };
-        Relationships: [];
-      };
     };
     Views: Record<string, never>;
     Functions: Record<string, never>;
@@ -172,6 +137,6 @@ export interface Database {
 export type ProjectRow = Database["public"]["Tables"]["projects"]["Row"];
 export type ProjectInsert = Database["public"]["Tables"]["projects"]["Insert"];
 export type ProjectUpdate = Database["public"]["Tables"]["projects"]["Update"];
+export type ProjectImageRow = Database["public"]["Tables"]["project_images"]["Row"];
 export type TestimonialRow = Database["public"]["Tables"]["testimonials"]["Row"];
 export type TestimonialInsert = Database["public"]["Tables"]["testimonials"]["Insert"];
-export type LeadInsert = Database["public"]["Tables"]["leads"]["Insert"];
