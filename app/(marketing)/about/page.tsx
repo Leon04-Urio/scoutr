@@ -41,7 +41,7 @@ const standards = [
 export default function AboutPage() {
   return (
     <>
-      <section className="border-b border-line pb-20 pt-12 md:pb-28 md:pt-16">
+      <section className="border-b border-line pb-12 pt-6 sm:pb-20 sm:pt-12 md:pb-28 md:pt-16">
         <Container className="flex flex-col gap-6">
           <Reveal>
             <span className="font-mono text-[11px] font-medium uppercase tracking-[0.2em] text-muted-2">
@@ -138,7 +138,7 @@ export default function AboutPage() {
             </h2>
           </Reveal>
           <Reveal delay={0.06}>
-            <Button href="/contact" size="lg" className="uppercase tracking-[0.08em]">
+            <Button href="/contact" size="lg" caps>
               Get a Quote
             </Button>
           </Reveal>

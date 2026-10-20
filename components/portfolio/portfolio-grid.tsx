@@ -40,7 +40,7 @@ export function PortfolioGrid({ projects }: { projects: Project[] }) {
       </div>
 
       {visible.length > 0 ? (
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid grid-cols-2 gap-3 md:gap-6 lg:grid-cols-3">
           {visible.map((project) => (
             <ProjectCard key={project.slug} project={project} />
           ))}

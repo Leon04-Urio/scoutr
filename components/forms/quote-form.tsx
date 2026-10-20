@@ -6,8 +6,9 @@ import { DatePicker } from "@/components/ui/date-picker";
 import { cn } from "@/lib/utils";
 import { propertyTypes, servicesRequired } from "@/lib/data/site";
 
+// 16px on phones: iOS Safari zooms the page when focusing inputs under 16px.
 const inputClasses =
-  "w-full rounded-lg border border-line-strong bg-surface px-4 py-3 text-[14px] text-paper placeholder:text-muted-2 outline-none focus:border-accent";
+  "w-full rounded-lg border border-line-strong bg-surface px-3.5 py-2.5 text-base text-paper placeholder:text-muted-2 outline-none focus:border-accent sm:px-4 sm:py-3 sm:text-[14px]";
 const labelClasses = "text-[13px] font-medium text-muted";
 
 type Status = "idle" | "submitting" | "submitted";
@@ -47,15 +48,17 @@ export function QuoteForm({ wide = false }: { wide?: boolean }) {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col gap-6">
-      <div className={cn("grid gap-6 sm:grid-cols-2", wide && "lg:grid-cols-4")}>
+    <form onSubmit={handleSubmit} className="flex flex-col gap-5 sm:gap-6">
+      {/* Two columns even on phones, with Email and Location spanning both,
+          so the form is 5 rows tall there instead of 8. */}
+      <div className={cn("grid grid-cols-2 gap-x-3 gap-y-4 sm:gap-6", wide && "lg:grid-cols-4")}>
         <Field label="Name" htmlFor="name">
           <input id="name" name="name" required className={inputClasses} placeholder="Jane Wanjiru" />
         </Field>
         <Field label="Company" htmlFor="company">
           <input id="company" name="company" className={inputClasses} placeholder="Optional" />
         </Field>
-        <Field label="Email" htmlFor="email">
+        <Field label="Email" htmlFor="email" className="col-span-2 sm:col-span-1">
           <input
             id="email"
             name="email"
@@ -66,7 +69,7 @@ export function QuoteForm({ wide = false }: { wide?: boolean }) {
           />
         </Field>
         <Field label="Phone" htmlFor="phone">
-          <input id="phone" name="phone" type="tel" className={inputClasses} placeholder="+254 7XX XXX XXX" />
+          <input id="phone" name="phone" type="tel" className={inputClasses} placeholder="07XX XXX XXX" />
         </Field>
         <Field label="Property type" htmlFor="propertyType">
           <select id="propertyType" name="propertyType" required className={inputClasses} defaultValue="">
@@ -80,7 +83,7 @@ export function QuoteForm({ wide = false }: { wide?: boolean }) {
             ))}
           </select>
         </Field>
-        <Field label="Property location" htmlFor="propertyLocation">
+        <Field label="Property location" htmlFor="propertyLocation" className="col-span-2 sm:col-span-1">
           <input
             id="propertyLocation"
             name="propertyLocation"
@@ -112,7 +115,7 @@ export function QuoteForm({ wide = false }: { wide?: boolean }) {
               type="button"
               onClick={() => toggleService(s)}
               className={cn(
-                "rounded-full border border-line-strong px-4 py-2 text-[13px] font-medium text-muted transition-colors hover:text-paper",
+                "rounded-full border border-line-strong px-3 py-1.5 text-[12px] font-medium text-muted transition-colors hover:text-paper sm:px-4 sm:py-2 sm:text-[13px]",
                 services.includes(s) && "border-accent bg-accent/10 text-accent"
               )}
             >
@@ -126,17 +129,21 @@ export function QuoteForm({ wide = false }: { wide?: boolean }) {
         <textarea
           id="message"
           name="message"
-          rows={4}
+          rows={3}
           className={inputClasses}
           placeholder="Tell us a bit about the property and your timeline."
         />
       </Field>
 
+      {/* Full-width default size on phones, lg-sized from sm up. */}
       <Button
         type="submit"
-        size="lg"
+        caps
         disabled={status === "submitting"}
-        className={cn("w-fit uppercase tracking-[0.08em]", wide && "self-center")}
+        className={cn(
+          "w-full sm:h-14 sm:w-fit sm:px-8 sm:text-base",
+          wide && "sm:self-center"
+        )}
       >
         {status === "submitting" ? "Sending…" : "Send Request"}
       </Button>
@@ -147,14 +154,16 @@ export function QuoteForm({ wide = false }: { wide?: boolean }) {
 function Field({
   label,
   htmlFor,
+  className,
   children,
 }: {
   label: string;
   htmlFor: string;
+  className?: string;
   children: React.ReactNode;
 }) {
   return (
-    <div className="flex flex-col gap-2">
+    <div className={cn("flex min-w-0 flex-col gap-1.5 sm:gap-2", className)}>
       <label htmlFor={htmlFor} className={labelClasses}>
         {label}
       </label>

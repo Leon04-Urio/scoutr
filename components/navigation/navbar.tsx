@@ -40,11 +40,18 @@ export function Navbar() {
     return () => observer.disconnect();
   }, [pathname]);
 
+  // The bar is solid cream once past the hero, and also whenever the mobile
+  // menu is open (so the open menu never sits on a transparent/black bar).
+  const solid = showWordmark || open;
+
+  const isActive = (href: string) =>
+    href === "/" ? pathname === "/" : pathname.startsWith(href);
+
   return (
     <header
       className={cn(
         "sticky top-0 z-50 transition-colors duration-300",
-        showWordmark ? "bg-paper" : "bg-transparent"
+        solid ? "bg-paper" : "bg-transparent"
       )}
     >
       <Container className="grid grid-cols-2 items-center py-4 md:grid-cols-[1fr_auto_1fr]">
@@ -60,8 +67,7 @@ export function Navbar() {
 
         <nav className="hidden items-center justify-self-center gap-6 md:flex">
           {mainNav.map((item) => {
-            const active =
-              item.href === "/" ? pathname === "/" : pathname.startsWith(item.href);
+            const active = isActive(item.href);
             return (
               <Link
                 key={item.href}
@@ -99,7 +105,7 @@ export function Navbar() {
           href="/"
           className={cn(
             "font-display text-lg transition-[opacity,color] duration-300 md:hidden",
-            showWordmark ? "text-ink opacity-100" : "text-paper opacity-0 pointer-events-none"
+            solid ? "text-ink opacity-100" : "text-paper opacity-0 pointer-events-none"
           )}
         >
           Scoutr.
@@ -111,8 +117,10 @@ export function Navbar() {
           aria-expanded={open}
           onClick={() => setOpen((v) => !v)}
           className={cn(
-            "flex h-10 w-10 items-center justify-center justify-self-end md:hidden",
-            showWordmark ? "text-ink" : "text-paper"
+            "flex h-10 w-10 items-center justify-center justify-self-end rounded-full transition-colors md:hidden",
+            // Over the hero's light sky a bare cream icon disappears, so it
+            // gets a dark translucent backing until the bar turns solid.
+            solid ? "text-ink" : "bg-ink/35 text-paper backdrop-blur-md"
           )}
         >
           {open ? <X size={22} /> : <Menu size={22} />}
@@ -120,19 +128,24 @@ export function Navbar() {
       </Container>
 
       {open ? (
-        <div className="border-t border-line bg-ink px-6 pb-6 pt-2 md:hidden">
+        // Overlays the page (absolute) rather than pushing it down, in the
+        // same cream as the bar.
+        <div className="absolute inset-x-0 top-full border-t border-ink/10 bg-paper px-6 pb-6 pt-2 shadow-[0_16px_32px_rgba(5,5,6,0.25)] md:hidden">
           <nav className="flex flex-col gap-1">
             {mainNav.map((item) => (
               <Link
                 key={item.href}
                 href={item.href}
-                className="rounded-lg px-2 py-3 text-[15px] font-medium text-paper/90 hover:bg-paper/5"
+                className={cn(
+                  "rounded-lg px-2 py-3 text-[15px] font-medium hover:bg-ink/5",
+                  isActive(item.href) ? "text-ink" : "text-ink/70"
+                )}
               >
                 {item.label}
               </Link>
             ))}
           </nav>
-          <Button href="/contact" className="mt-4 w-full uppercase tracking-[0.08em]">
+          <Button href="/contact" variant="ink" caps className="mt-4 w-full">
             Get a Quote
           </Button>
         </div>

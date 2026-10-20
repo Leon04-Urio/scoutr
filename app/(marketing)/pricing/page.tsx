@@ -14,7 +14,7 @@ export const metadata: Metadata = {
 export default function PricingPage() {
   return (
     <>
-      <section className="border-b border-line pb-16 pt-10 md:pb-24 md:pt-14">
+      <section className="border-b border-line pb-10 pt-6 sm:pb-16 sm:pt-10 md:pb-24 md:pt-14">
         <Container className="flex flex-col gap-3">
           <span className="font-mono text-[11px] font-medium uppercase tracking-[0.2em] text-muted-2">
             Pricing
@@ -33,7 +33,7 @@ export default function PricingPage() {
         </Container>
       </section>
 
-      <section className="border-b border-line py-16 md:py-24">
+      <section className="border-b border-line py-10 sm:py-16 md:py-24">
         <Container className="grid gap-6 lg:grid-cols-3">
           {pricingPackages.map((pkg) => (
             <div
@@ -66,11 +66,7 @@ export default function PricingPage() {
                 <p className="font-mono text-[11px] uppercase tracking-[0.08em] text-muted-2">
                   Best for — {pkg.bestFor}
                 </p>
-                <Button
-                  href="/contact"
-                  variant={pkg.featured ? "primary" : "outline"}
-                  className="uppercase tracking-[0.08em]"
-                >
+                <Button href="/contact" variant={pkg.featured ? "primary" : "outline"} caps>
                   Get a Quote
                 </Button>
               </div>

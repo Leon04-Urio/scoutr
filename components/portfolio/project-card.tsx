@@ -53,6 +53,8 @@ export function ProjectCard({ project }: { project: Project }) {
           <img
             src={project.coverImage.url}
             alt={project.coverImage.label ?? project.title}
+            // Lazy: also stops the homepage's phone-hidden cards from downloading.
+            loading="lazy"
             className={cn(
               "absolute inset-0 h-full w-full object-cover transition-opacity duration-500",
               playing ? "opacity-0" : "opacity-100"
@@ -87,7 +89,7 @@ export function ProjectCard({ project }: { project: Project }) {
         ) : null}
 
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink/70 via-transparent to-transparent" />
-        <h3 className="absolute bottom-6 left-6 max-w-[80%] font-geo text-lg font-semibold uppercase leading-tight tracking-tight text-paper">
+        <h3 className="absolute bottom-3 left-3 right-3 font-geo text-[12px] font-semibold uppercase leading-tight tracking-tight text-paper sm:bottom-6 sm:left-6 sm:right-auto sm:max-w-[80%] sm:text-lg">
           {project.title}
         </h3>
       </Link>

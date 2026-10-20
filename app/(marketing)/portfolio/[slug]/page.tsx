@@ -5,11 +5,9 @@ import { ArrowLeft, MapPin, Quote } from "lucide-react";
 import { Container } from "@/components/ui/container";
 import { Badge } from "@/components/ui/badge";
 import { QuoteForm } from "@/components/forms/quote-form";
-import { ProjectGallery } from "@/components/portfolio/project-gallery";import {
-  getProjectBySlug,
-  getProjectImages,
-  getProjectTestimonial,
-} from "@/lib/supabase/queries";
+import { ProjectGallery } from "@/components/portfolio/project-gallery";
+import { getProjectBySlug, getProjectImages, getProjectTestimonial } from "@/lib/supabase/queries";
+import { cn } from "@/lib/utils";
 
 // No generateStaticParams: projects are admin-edited at runtime (published/
 // unpublished, content changes), so these render dynamically per request
@@ -50,11 +48,10 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
   return (
     <>
       <section
-        className={
-          project.coverImage.url
-            ? "relative flex h-[40vh] min-h-[300px] items-end"
-            : `relative flex h-[40vh] min-h-[300px] items-end bg-gradient-to-br ${project.coverImage.gradient}`
-        }
+        className={cn(
+          "relative flex items-end sm:h-[40vh] sm:min-h-[300px]",
+          !project.coverImage.url && ["bg-gradient-to-br", project.coverImage.gradient]
+        )}
       >
         {project.coverImage.url ? (
           // eslint-disable-next-line @next/next/no-img-element -- see project-card.tsx
@@ -65,7 +62,8 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
           />
         ) : null}
         <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/20 to-transparent" />
-        <Container className="relative flex flex-col gap-3 pb-10">
+        {/* Phones: banner is just its content plus padding (no fixed height). */}
+        <Container className="relative flex flex-col gap-3 pb-8 pt-6 sm:pb-10 sm:pt-0">
           <Link
             href="/portfolio"
             className="mb-2 flex w-fit items-center gap-1.5 text-[13px] text-muted transition-colors hover:text-paper"
@@ -82,8 +80,8 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
         </Container>
       </section>
 
-      <section className="py-16 md:py-20">
-        <Container className="flex flex-col gap-10">
+      <section className="pb-12 pt-8 sm:py-16 md:py-20">
+        <Container className="flex flex-col gap-8 sm:gap-10">
           <div className="flex flex-col gap-4">
             <SectionLabel>About the Project</SectionLabel>
             <p className="max-w-2xl text-[15px] leading-relaxed text-muted">
@@ -108,7 +106,10 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
 
       {project.tourEmbedUrl ? (
         <MediaSection label="3D Tour" hint="Drag to look around. Use the controls to switch to the dollhouse or floor plan view.">
-          <div className="relative aspect-[4/5] w-full overflow-hidden rounded-2xl border border-line bg-surface sm:aspect-video">
+          {/* Phones: exactly one screen tall minus the sticky navbar and a
+              margin (svh = height with browser bars showing), so the whole
+              tour is visible at once with no scrolling. */}
+          <div className="relative h-[calc(100svh-6rem)] w-full overflow-hidden rounded-2xl border border-line bg-surface sm:aspect-video sm:h-auto">
             <iframe
               src={project.tourEmbedUrl}
               title={`${project.title} — 3D tour`}
@@ -141,12 +142,12 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
 
       {testimonial ? (
         <MediaSection label="From the Owners">
-          <figure className="flex max-w-3xl flex-col gap-5 rounded-2xl border border-accent/30 bg-surface p-7 md:p-9">
-            <Quote className="text-accent" size={22} />
-            <blockquote className="font-display text-xl leading-snug text-paper md:text-2xl">
+          <figure className="flex max-w-3xl flex-col gap-3 rounded-2xl border border-accent/30 bg-surface p-5 sm:gap-5 sm:p-7 md:p-9">
+            <Quote className="size-[18px] text-accent sm:size-[22px]" />
+            <blockquote className="font-display text-[15px] leading-relaxed text-paper/90 sm:text-xl sm:leading-snug sm:text-paper md:text-2xl">
               &ldquo;{testimonial.quote}&rdquo;
             </blockquote>
-            <figcaption className="font-mono text-[11px] uppercase tracking-[0.1em] text-muted-2">
+            <figcaption className="font-mono text-[10px] uppercase tracking-[0.1em] text-muted-2 sm:text-[11px]">
               {testimonial.name}
               {testimonial.role ? ` — ${testimonial.role}` : ""}
             </figcaption>
@@ -156,8 +157,8 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
 
       <section className="pb-16 md:pb-24">
         <Container>
-          <div className="flex w-full flex-col gap-6 rounded-2xl border border-line bg-surface/40 p-6 md:p-10">
-            <h2 className="font-display text-2xl text-paper md:text-3xl">
+          <div className="flex w-full flex-col gap-5 rounded-2xl border border-line bg-surface/40 p-4 sm:gap-6 sm:p-6 md:p-10">
+            <h2 className="text-balance font-display text-xl leading-snug text-paper sm:text-2xl md:text-3xl">
               Want this experience for your property?
             </h2>
             <QuoteForm wide />
@@ -186,8 +187,8 @@ function MediaSection({
   children: React.ReactNode;
 }) {
   return (
-    <section className="pb-16 md:pb-20">
-      <Container className="flex flex-col gap-5">
+    <section className="pb-12 sm:pb-16 md:pb-20">
+      <Container className="flex flex-col gap-4 sm:gap-5">
         <div className="flex flex-col gap-1.5">
           <SectionLabel>{label}</SectionLabel>
           {hint ? <p className="text-[13px] text-muted-2">{hint}</p> : null}

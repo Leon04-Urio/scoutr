@@ -12,9 +12,12 @@ export async function FeaturedProjects() {
         Portfolio
       </span>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
-        {featuredProjects.map((project) => (
-          <ProjectCard key={project.slug} project={project} />
+      <div className="grid grid-cols-2 lg:grid-cols-4">
+        {/* Phones show a single row of two; the rest appear from sm up. */}
+        {featuredProjects.map((project, i) => (
+          <div key={project.slug} className={i >= 2 ? "hidden sm:block" : undefined}>
+            <ProjectCard project={project} />
+          </div>
         ))}
       </div>
 

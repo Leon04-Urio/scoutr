@@ -298,10 +298,19 @@ export const CloudShader = ({
       "(prefers-reduced-motion: reduce)",
     ).matches;
 
+    // Cloud motion is in units of canvas height, so a short canvas (phones)
+    // drifts only a few px/s and reads as frozen. Scale time up for short
+    // canvases to keep the on-screen drift close to the desktop pace.
+    const REFERENCE_HEIGHT = 700;
+    let timeScale = 1;
+
     const resize = () => {
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
       const width = canvas.clientWidth;
       const height = canvas.clientHeight;
+      // Soft clouds don't need retina resolution on phones; rendering fewer
+      // pixels keeps the fragment shader smooth on mobile GPUs.
+      const dpr = Math.min(window.devicePixelRatio || 1, width < 640 ? 1 : 2);
+      timeScale = Math.min(3, Math.max(1, REFERENCE_HEIGHT / Math.max(1, height)));
       const w = Math.max(1, Math.floor(width * dpr));
       const h = Math.max(1, Math.floor(height * dpr));
       if (canvas.width !== w || canvas.height !== h) {
@@ -316,11 +325,16 @@ export const CloudShader = ({
     observer.observe(canvas);
     resize();
 
-    const start = performance.now();
+    // Accumulated rather than (now - start), so a timeScale change on resize
+    // doesn't make the clouds jump.
+    let elapsed = 0;
+    let last = performance.now();
     const draw = (now: number) => {
       if (!running) return;
       const p = paramsRef.current;
-      const elapsed = reduceMotion ? 0 : ((now - start) / 1000) * p.speed;
+      const dt = Math.min(0.1, (now - last) / 1000);
+      last = now;
+      if (!reduceMotion) elapsed += dt * p.speed * timeScale;
       const cloud = parseHex(p.cloudColor);
       const skyTop = parseHex(p.skyTopColor);
       const skyBottom = parseHex(p.skyBottomColor);

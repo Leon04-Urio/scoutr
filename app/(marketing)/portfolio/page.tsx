@@ -13,7 +13,7 @@ export default async function PortfolioPage() {
   const projects = await getPublishedProjects();
 
   return (
-    <section className="pb-16 pt-10 md:pb-24 md:pt-14">
+    <section className="pb-16 pt-6 sm:pt-10 md:pb-24 md:pt-14">
       <Container className="flex flex-col gap-12">
         <div className="flex flex-col gap-3">
           <span className="font-mono text-[11px] font-medium uppercase tracking-[0.2em] text-muted-2">

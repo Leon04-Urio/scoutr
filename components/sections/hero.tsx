@@ -3,6 +3,14 @@ import { SectionDivider } from "@/components/ui/section-divider";
 import { Reveal } from "@/components/motion/reveal";
 import { HeroPhoto } from "@/components/sections/hero-photo";
 
+const featuredScan = {
+  name: "Maua Residence",
+  city: "Nairobi",
+  location: "Nairobi, KE",
+  year: "2026",
+  size: "310 m²",
+};
+
 const hotspots = [
   { top: "46%", left: "36%" },
   { top: "58%", left: "64%" },
@@ -17,7 +25,9 @@ export function Hero() {
         <span
           key={i}
           aria-hidden
-          className="pointer-events-none absolute z-20 -translate-x-1/2 -translate-y-1/2"
+          // Positioned for the desktop crop of the photo; on phones the
+          // crop differs and the dots land on the trees, so they're hidden.
+          className="pointer-events-none absolute z-20 hidden -translate-x-1/2 -translate-y-1/2 sm:block"
           style={spot}
         >
           <span className="absolute inset-0 -m-2 animate-ping rounded-full border border-paper/40" />
@@ -29,18 +39,27 @@ export function Hero() {
         <div className="flex flex-col gap-8 sm:flex-row sm:items-end sm:justify-between">
           <div className="flex flex-col gap-5">
             <Reveal>
-              <div className="w-64 rounded-2xl border border-line-strong bg-paper/10 p-5 backdrop-blur-md">
+              {/* Phones: one-line tag instead of the full card, which
+                  otherwise covers a third of the screen. */}
+              <p className="w-fit rounded-full border border-line-strong bg-ink/30 px-4 py-2 text-[12px] text-paper/90 backdrop-blur-md sm:hidden">
+                <span className="font-mono text-[10px] uppercase tracking-[0.15em] text-muted">
+                  Featured scan
+                </span>
+                <span className="mx-2 text-muted-2">·</span>
+                {featuredScan.name}, {featuredScan.city}
+              </p>
+              <div className="hidden w-64 rounded-2xl border border-line-strong bg-paper/10 p-5 backdrop-blur-md sm:block">
                 <span className="font-mono text-[10px] uppercase tracking-[0.15em] text-muted-2">
                   Featured scan
                 </span>
-                <p className="mt-1 font-display text-lg text-paper">Maua Residence</p>
+                <p className="mt-1 font-display text-lg text-paper">{featuredScan.name}</p>
                 <dl className="mt-3 grid grid-cols-2 gap-y-1.5 text-[12px] text-paper/75">
                   <dt className="text-muted-2">Location</dt>
-                  <dd>Nairobi, KE</dd>
+                  <dd>{featuredScan.location}</dd>
                   <dt className="text-muted-2">Year</dt>
-                  <dd>2026</dd>
+                  <dd>{featuredScan.year}</dd>
                   <dt className="text-muted-2">Size</dt>
-                  <dd>310 m²</dd>
+                  <dd>{featuredScan.size}</dd>
                 </dl>
               </div>
             </Reveal>
@@ -50,7 +69,7 @@ export function Hero() {
             <p className="font-mono text-[11px] uppercase tracking-[0.15em] text-muted-2">
               360° tours for listings that sell
             </p>
-            <p className="mt-2 font-display text-2xl leading-snug text-paper md:text-3xl">
+            <p className="mt-2 text-balance font-display text-2xl leading-snug text-paper md:text-3xl">
               Let them walk it before they view it.
             </p>
           </Reveal>

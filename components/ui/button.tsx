@@ -12,14 +12,21 @@ const buttonVariants = cva(
         outline:
           "border border-line-strong bg-transparent text-paper hover:border-paper hover:bg-paper/5",
         ghost: "text-paper/80 underline-offset-4 hover:text-paper hover:underline",
+        /** Dark button for cream surfaces (e.g. the solid navbar / mobile menu). */
+        ink: "bg-ink text-paper hover:bg-ink/85",
       },
       size: {
         default: "h-12 px-6",
         sm: "h-10 px-5 text-[13px]",
         lg: "h-14 px-8 text-base",
       },
+      /** Uppercase CTA lettering ("GET A QUOTE", "SEND REQUEST"). */
+      caps: {
+        true: "uppercase tracking-[0.08em]",
+        false: "",
+      },
     },
-    defaultVariants: { variant: "primary", size: "default" },
+    defaultVariants: { variant: "primary", size: "default", caps: false },
   }
 );
 
@@ -30,10 +37,11 @@ export function Button({
   className,
   variant,
   size,
+  caps,
   href,
   ...props
 }: ButtonProps) {
-  const classes = cn(buttonVariants({ variant, size }), className);
+  const classes = cn(buttonVariants({ variant, size, caps }), className);
   if (href) {
     return (
       <Link href={href} className={classes}>
